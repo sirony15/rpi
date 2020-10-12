@@ -1,2 +1,4 @@
 hdmi_force_hotplug=1
 hdmi_drive=2
+#if no result add another line
+hdmi_safe=1
