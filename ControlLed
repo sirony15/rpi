@@ -1,0 +1,67 @@
+import RPi.GPIO as gpio  
+import time
+gpio.setmode(gpio.BOARD)
+gpio.setwarnings(False)
+pin=7
+gpio.setup(pin,gpio.OUT)
+pwm=gpio.PWM(pin,100)
+pwm.start(0)
+
+def lon():
+    ontime=int(input("After how many sec you wanna On the LED?"))
+    print('LED will ON after ',ontime,' sec\n')
+    time.sleep(ontime)
+    for x in range(0,100):
+        pwm.ChangeDutyCycle(x)
+        time.sleep(0.01)
+    print('LED turned on now\n')
+def loff():
+    offtime=int(input("After how many sec you wanna Off the LED?"))
+    print('LED will OFF after ',offtime,' sec\n')
+    time.sleep(offtime)
+    for x in range(100,0,-1):
+            pwm.ChangeDutyCycle(x)
+            time.sleep(0.01)
+    print('led turned off now\n')
+
+  
+def lexit():
+    gpio.cleanup()
+    
+#main prog
+s=0
+while True:
+    print('******* Hi I am a LED *******')
+    print('*  1 on the LED after _sec  *')
+    print('*  2 off the LED after _sec *')
+    print('*    9 exit the program     *')
+    print('*****************************\n\n')
+    time.sleep(0.1)
+    try:
+        x=int(input("Please choose your option:"))
+    except:
+        print("input wrong. chose a number")
+        continue
+    if x==9:
+        print('we are closing the program')
+        lexit()
+        break
+    elif x==1:
+        if s==0:
+            lon()
+            s=1
+        else:
+            print('led already on')
+    elif x==2:
+        if s==1:
+            loff()
+            s=0
+        else:
+            print('led already off')
+    else:
+        print('input 1/2/9')
+        
+        
+
+
+
