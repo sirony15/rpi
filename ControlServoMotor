@@ -1,0 +1,34 @@
+import RPi.GPIO as GPIO
+import time
+GPIO.setwarnings(False)
+pin=11
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(pin, GPIO.OUT)
+p = GPIO.PWM(pin, 50)
+p.start(0)
+
+
+def setangle(a):
+    duty=a/18+2
+    GPIO.output(pin,True)
+    p.ChangeDutyCycle(duty)
+    time.sleep(.1)
+    
+    
+def cle():
+    p.stop()
+    GPIO.cleanup()
+    
+    
+    
+try:
+    while True:
+        d=int(input('input degree: '))
+        if d<=180 and d>=0:
+            setangle(d)
+        else:
+            print('input 1 to 180')
+except KeyboardInterrupt:
+        cle()
+
+
